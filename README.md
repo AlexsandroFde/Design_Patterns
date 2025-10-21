@@ -12,15 +12,6 @@ três padrões relacionados à persistência e ao domínio:
 	recuperando e persistindo o agregado como uma unidade e reforçando
 	invariantes/consistência.
 
-Como executar (ambiente com Maven instalado):
-
-Abra um PowerShell e rode:
-
-```powershell
-cd C:\Users\Alexsandro\Documents\PP
-mvn -DskipTests=true compile exec:java -Dexec.mainClass=com.example.patterns.Main
-```
-
 Saída esperada: mensagens no console mostrando quantos pedidos foram lidos
 por cada abordagem e demonstração da invariante do agregado (não é possível
 adicionar mais de 10 itens a um pedido).
