@@ -12,10 +12,16 @@ public class DecoratorDemo {
 
         // ANTES
         NotifierBefore before = new NotifierBefore();
-        before.send("Pedido 123 aprovado", true, true, true);
+        before.send("Pedido 123 aprovado", 
+            true, 
+            true, 
+            true
+        );
 
         // DEPOIS
-        Notifier decorated = new SlackDecorator(new SMSDecorator(new EmailNotifier()));
-        decorated.send("Pedido 123 aprovado");
+        NotifierInterface notifier = new EmailNotifier();
+        notifier = new SMSDecorator(notifier);
+        notifier = new SlackDecorator(notifier);
+        notifier.send("Pedido 123 aprovado");
     }
 }

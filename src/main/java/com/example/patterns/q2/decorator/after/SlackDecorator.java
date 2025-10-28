@@ -3,10 +3,10 @@ package com.example.patterns.q2.decorator.after;
 /**
  * Decorator: adiciona envio para Slack ao Notifier.
  */
-public class SlackDecorator implements Notifier {
-    private final Notifier delegate;
+public class SlackDecorator implements NotifierInterface {
+    private final NotifierInterface delegate;
 
-    public SlackDecorator(Notifier delegate) {
+    public SlackDecorator(NotifierInterface delegate) {
         this.delegate = delegate;
     }
 

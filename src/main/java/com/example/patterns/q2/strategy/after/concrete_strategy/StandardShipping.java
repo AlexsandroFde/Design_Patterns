@@ -1,4 +1,6 @@
-package com.example.patterns.q2.strategy.after;
+package com.example.patterns.q2.strategy.after.concrete_strategy;
+
+import com.example.patterns.q2.strategy.after.strategy.ShippingStrategy;
 
 public class StandardShipping implements ShippingStrategy {
     private final boolean international;
@@ -13,7 +15,4 @@ public class StandardShipping implements ShippingStrategy {
         if (orderTotal > 200.0) base *= 0.8;
         return base;
     }
-
-    @Override
-    public String name() { return international ? "STANDARD (INTL)" : "STANDARD"; }
 }

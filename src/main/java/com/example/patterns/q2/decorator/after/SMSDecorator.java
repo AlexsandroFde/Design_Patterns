@@ -3,10 +3,10 @@ package com.example.patterns.q2.decorator.after;
 /**
  * Decorator: adiciona envio por SMS ao Notifier.
  */
-public class SMSDecorator implements Notifier {
-    private final Notifier delegate;
+public class SMSDecorator implements NotifierInterface {
+    private final NotifierInterface delegate;
 
-    public SMSDecorator(Notifier delegate) {
+    public SMSDecorator(NotifierInterface delegate) {
         this.delegate = delegate;
     }
 

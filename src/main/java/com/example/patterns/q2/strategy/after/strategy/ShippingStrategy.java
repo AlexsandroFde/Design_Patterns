@@ -1,4 +1,4 @@
-package com.example.patterns.q2.strategy.after;
+package com.example.patterns.q2.strategy.after.strategy;
 
 /**
  * Questão 2 — Parte 1 (DEPOIS): Strategy
@@ -6,5 +6,4 @@ package com.example.patterns.q2.strategy.after;
  */
 public interface ShippingStrategy {
     double calculate(double orderTotal);
-    String name();
 }

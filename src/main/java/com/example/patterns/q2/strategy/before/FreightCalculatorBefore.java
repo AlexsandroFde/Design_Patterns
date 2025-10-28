@@ -27,10 +27,13 @@ public class FreightCalculatorBefore {
                 base *= 0.9; // desconto
             }
             return base;
-        } else if ("INTERNACIONAL".equalsIgnoreCase(service)) {
+        } else if ("PREMIUM".equalsIgnoreCase(service)) {
             base = 50.0;
+            if ("INTERNACIONAL".equalsIgnoreCase(destination)) {
+                base += 20.0;
+            }
             if (orderTotal > 500.0) {
-                base -= 5.0; // promoção
+                base -= 5.0; // desconto
             }
             return base;
         }
