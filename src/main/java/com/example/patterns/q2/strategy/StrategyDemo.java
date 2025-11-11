@@ -11,11 +11,12 @@ import com.example.patterns.q2.strategy.after.context.ShippingCalculatorContext;
  */
 public class StrategyDemo {
     public static void main(String[] args) {
-        System.out.println("Q2 - Strategy: antes (if/else) vs depois (polimorfismo)\n");
+        System.out.println("Q2 - Strategy: antes (if/else) vs depois (Strategy)\n");
 
         double orderTotal = 250.0;
 
         // ANTES
+        System.out.println("Antes (if/else):\n");
         FreightCalculatorBefore before = new FreightCalculatorBefore();
         double v1 = before.calculate(orderTotal, "NACIONAL", "STANDARD");
         double v2 = before.calculate(orderTotal, "NACIONAL", "EXPRESS");
@@ -25,6 +26,7 @@ public class StrategyDemo {
         System.out.println("[ANTES] PREMIUM = " + v3);
 
         // DEPOIS (Strategy)
+        System.out.println("Depois (Strategy):\n");
         ShippingCalculatorContext std = new ShippingCalculatorContext(new StandardShipping(false));
         ShippingCalculatorContext exp = new ShippingCalculatorContext(new ExpressShipping(false));
         ShippingCalculatorContext intl = new ShippingCalculatorContext(new PremiumShipping(true));
