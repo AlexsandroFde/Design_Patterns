@@ -1,41 +1,102 @@
 package com.example.patterns.q3.di.before;
 
 /**
- * Antes: Abstract Factory para criar serviços.
- * Problemas: verboso e adiciona muitas classes/interfaces para simples criação.
+ * Questão 3 — ANTES: Abstract Factory (separado do Singleton)
+ * 
+ * Problema: muita verbosidade para simplesmente criar objetos com dependências.
+ * Você precisa de:
+ * - 1 interface da factory
+ * - N classes concretas da factory (uma por variação)
+ * - Interfaces/classes para cada "família" de produtos
+ * 
+ * Resultado: explosão de classes apenas para criação de objetos.
  */
 public interface ServiceAbstractFactory {
-    OrderServiceLegacy createOrderService();
-
-    class ProdFactory implements ServiceAbstractFactory {
+    DatabaseConnection createDatabase();
+    NotificationService createNotifier();
+    
+    /**
+     * Factory para ambiente de PRODUÇÃO
+     */
+    class ProductionFactory implements ServiceAbstractFactory {
         @Override
-        public OrderServiceLegacy createOrderService() {
-            return new OrderServiceLegacy(SingletonDatabase.getInstance());
+        public DatabaseConnection createDatabase() {
+            return new PostgresConnection();
+        }
+        
+        @Override
+        public NotificationService createNotifier() {
+            return new EmailNotificationService();
         }
     }
-
+    
+    /**
+     * Factory para ambiente de TESTE
+     */
     class TestFactory implements ServiceAbstractFactory {
         @Override
-        public OrderServiceLegacy createOrderService() {
-            return new OrderServiceLegacy(new TestDatabase());
+        public DatabaseConnection createDatabase() {
+            return new InMemoryConnection();
+        }
+        
+        @Override
+        public NotificationService createNotifier() {
+            return new MockNotificationService();
         }
     }
 }
 
-class OrderServiceLegacy {
-    private final SingletonDatabase db; // acoplado ao tipo concreto
+// ===== "Produtos" criados pela factory =====
 
-    public OrderServiceLegacy(SingletonDatabase db) {
-        this.db = db;
-    }
+interface DatabaseConnection {
+    void execute(String sql);
+}
 
-    public void place(String orderId) {
-        db.save("order=" + orderId);
+class PostgresConnection implements DatabaseConnection {
+    @Override
+    public void execute(String sql) {
+        System.out.println("[PostgreSQL] Executando: " + sql);
     }
 }
 
-class TestDatabase extends SingletonDatabase {
-    // herança usada como "mock" improvisado (má prática); apenas demonstra o problema
+class InMemoryConnection implements DatabaseConnection {
     @Override
-    public void save(String data) { System.out.println("[TestDB] (fake) " + data); }
+    public void execute(String sql) {
+        System.out.println("[InMemory] Executando: " + sql);
+    }
+}
+
+interface NotificationService {
+    void notify(String message);
+}
+
+class EmailNotificationService implements NotificationService {
+    @Override
+    public void notify(String message) {
+        System.out.println("[Email] Enviando: " + message);
+    }
+}
+
+class MockNotificationService implements NotificationService {
+    @Override
+    public void notify(String message) {
+        System.out.println("[Mock] Simulando envio: " + message);
+    }
+}
+
+// ===== Serviço que usa os produtos =====
+
+class OrderServiceLegacy {
+    private final DatabaseConnection db;
+    private final NotificationService notifier;
+    
+    public OrderServiceLegacy(DatabaseConnection db, NotificationService notifier) {
+        this.db = db;
+        this.notifier = notifier;
+    }
+    
+    public void placeOrder(String orderId) {
+        db.execute("INSERT INTO orders VALUES ('" + orderId + "')");
+        notifier.notify("Pedido " + orderId + " criado");
+    }
 }

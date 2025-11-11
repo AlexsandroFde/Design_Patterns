@@ -19,7 +19,8 @@ public class OrderService {
 
     public void place(String orderId) {
         logger.info("Colocando pedido " + orderId);
-        database.save("order=" + orderId);
+        String sql = "INSERT INTO orders (id) VALUES ('" + orderId + "')";
+        database.executeSQL(sql);
     }
 
     public void generateReport() {
