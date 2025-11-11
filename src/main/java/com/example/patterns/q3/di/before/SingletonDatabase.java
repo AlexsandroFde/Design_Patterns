@@ -7,7 +7,6 @@ package com.example.patterns.q3.di.before;
 public class SingletonDatabase {
     private static final SingletonDatabase INSTANCE = new SingletonDatabase();
 
-    // Observação: construtor protegido para permitir o "fake" no exemplo (quebra o encapsulamento típico do Singleton)
     protected SingletonDatabase() { }
 
     public static SingletonDatabase getInstance() {

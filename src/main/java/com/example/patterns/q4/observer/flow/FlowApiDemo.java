@@ -4,6 +4,8 @@ import java.util.concurrent.Flow;
 import java.util.concurrent.SubmissionPublisher;
 import java.util.concurrent.TimeUnit;
 
+//Eventos e Reactive Programming, Observer vira aqui a base da programação: fluxo contínuo de notificações assíncronas
+
 public class FlowApiDemo {
     static class PrintSubscriber implements Flow.Subscriber<String> {
         private Flow.Subscription subscription;
